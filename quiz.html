@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #282c36;
+            color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(255, 255, 255, 0.1);
+            background-color: #3a3f4b;
+        }
+        #question {
+            background-color: #ff9800;
+            padding: 15px;
+            border-radius: 5px;
+            color: black;
+        }
+        .option {
+            display: block;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #555;
+            color: white;
+        }
+        .option:hover {
+            background-color: #777;
+        }
+        .correct {
+            background-color: #4CAF50 !important;
+            color: white;
+        }
+        .wrong {
+            background-color: #FF4C4C !important;
+            color: white;
+        }
+        .success {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="question">Loading...</h2>
+        <div id="options"></div>
+        <p id="score-container">Score: <span id="score">0</span></p>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "What is the capital of India?", options: ["Delhi", "Tamilnadu", "Mumbai", "Kashmir"], answer: "Delhi" },
+            { question: "What is 2 + 4?", options: ["3", "4", "5", "6"], answer: "6" },
+            { question: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Jupiter", "Venus"], answer: "Mars" },
+            { question: "Which Indian festival is known as the Festival of Lights?", options: ["Diwali", "Holi", "Pongal", "Onam"], answer: "Diwali" },
+            { question: "Which Indian state has the largest population?", options: ["Uttar Pradesh", "Tamil Nadu", "Kerala", "Karnataka"], answer: "Uttar Pradesh" }
+        ];        
+        let currentQuestionIndex = 0;
+        let score = 0;
+        
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                document.body.innerHTML = `<div class='success'>Quiz Over! Your final score is: ${score}</div>`;
+                return;
+            }
+            
+            let q = questions[currentQuestionIndex];
+            document.getElementById("question").innerText = q.question;
+            
+            let optionsHTML = "";
+            q.options.forEach(option => {
+                optionsHTML += `<div class='option' onclick='checkAnswer(this, "${option}")'>${option}</div>`;
+            });
+            document.getElementById("options").innerHTML = optionsHTML;
+        }
+        
+        function checkAnswer(element, selectedOption) {
+            let correctAnswer = questions[currentQuestionIndex].answer;
+            
+            if (selectedOption === correctAnswer) {
+                element.classList.add("correct");
+                score++;
+                document.getElementById("score").innerText = score;
+            } else {
+                element.classList.add("wrong");
+            }
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 1000);
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>
