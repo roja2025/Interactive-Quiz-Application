@@ -11,3 +11,6 @@ DOMAIN: FRONTEND WEB DEVELOPMENT
 DURATION: 8 WEEKS
 
 MENTOR: NEELA SANTOSH
+
+## OUTPUT
+![Image](https://github.com/user-attachments/assets/04f056e4-5c8f-4279-81d5-3f045838284f)
